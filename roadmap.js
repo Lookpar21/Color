@@ -19,16 +19,19 @@ function save() {
 }
 
 function createRoom(name) {
-  rooms[name] = {
-    big: [],
-    bigEye: [],
-    small: [],
-    cockroach: []
-  };
-  currentRoom = name;
+  if (!rooms[name]) {   // ถ้ายังไม่มีห้องนี้
+    rooms[name] = {
+      big: [],
+      bigEye: [],
+      small: [],
+      cockroach: []
+    };
+  }
+  currentRoom = name;   // เปลี่ยนมาใช้ห้องนี้
   save();
   updateRoomSelect();
 }
+
 
 function newRoom() {
   let count = Object.keys(rooms).length + 1;
