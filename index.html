@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Baccarat Roadmap v4</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Baccarat Roadmap (Manual Input v4)</h1>
+
+  <div class="room-control">
+    <label>เลือกห้อง:</label>
+    <select id="roomSelect" onchange="changeRoom()"></select>
+    <button onclick="newRoom()">สร้างห้องใหม่</button>
+  </div>
+
+  <div class="input-group">
+    <label>Big Road:</label>
+    <input type="text" id="bigInput">
+    <button onclick="addRoad('big')">เพิ่ม</button>
+    <button onclick="undo('big')">ลบล่าสุด</button>
+    <button onclick="clearRoad('big')">ล้างทั้งหมด</button>
+  </div>
+
+  <div class="input-group">
+    <label>Big Eye Road:</label>
+    <input type="text" id="bigEyeInput">
+    <button onclick="addRoad('bigEye')">เพิ่ม</button>
+    <button onclick="undo('bigEye')">ลบล่าสุด</button>
+    <button onclick="clearRoad('bigEye')">ล้างทั้งหมด</button>
+  </div>
+
+  <div class="input-group">
+    <label>Small Road:</label>
+    <input type="text" id="smallInput">
+    <button onclick="addRoad('small')">เพิ่ม</button>
+    <button onclick="undo('small')">ลบล่าสุด</button>
+    <button onclick="clearRoad('small')">ล้างทั้งหมด</button>
+  </div>
+
+  <div class="input-group">
+    <label>Cockroach Road:</label>
+    <input type="text" id="cockroachInput">
+    <button onclick="addRoad('cockroach')">เพิ่ม</button>
+    <button onclick="undo('cockroach')">ลบล่าสุด</button>
+    <button onclick="clearRoad('cockroach')">ล้างทั้งหมด</button>
+  </div>
+
+  <hr>
+
+  <div class="input-group">
+    <label>ค้นหาจาก Big Road:</label>
+    <input type="text" id="searchInput">
+    <button onclick="search()">ค้นหา</button>
+  </div>
+
+  <div class="road">
+    <h3>Big Road</h3>
+    <div class="grid" id="bigRoad"></div>
+  </div>
+  <div class="road">
+    <h3>Big Eye Road</h3>
+    <div class="grid" id="bigEyeRoad"></div>
+  </div>
+  <div class="road">
+    <h3>Small Road</h3>
+    <div class="grid" id="smallRoad"></div>
+  </div>
+  <div class="road">
+    <h3>Cockroach Road</h3>
+    <div class="grid" id="cockroachRoad"></div>
+  </div>
+
+  <script src="roadmap.js"></script>
+
+    <button onclick="exportData()">Export ข้อมูล</button>
+    <input type="file" id="importFile" style="display:none" onchange="importData(event)">
+    <button onclick="document.getElementById('importFile').click()">Import ข้อมูล</button>
+    
+</body>
+</html>
