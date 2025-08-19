@@ -105,33 +105,46 @@ function drawGrid(id, arr) {
   });
 }
 
-function search() {
-  if (!currentRoom) return;
+// ✅ ค้นหาทุกห้อง
+function searchBigRoad() {
   let input = document.getElementById("searchInput").value.toUpperCase();
   if (!input) return;
-  let stored = rooms[currentRoom];
 
-  let bigArr = stored.big;
-  let bigStr = bigArr.join("");
+  let resultDiv = document.getElementById("searchResult");
+  resultDiv.innerHTML = ""; // ล้างผลเก่า
 
-  let idx = bigStr.indexOf(input);
-  if (idx !== -1 && idx + input.length < bigArr.length) {
-    let nextBig = bigArr[idx + input.length];
-    let nextBigEye = stored.bigEye[idx + input.length] || "-";
-    let nextSmall = stored.small[idx + input.length] || "-";
-    let nextCockroach = stored.cockroach[idx + input.length] || "-";
+  let found = false;
 
-    alert("พบสถิติในห้อง " + currentRoom +
-      "\nBig Road: " + bigArr.join("") +
-      "\nตาถัดไปของ Big Road หลัง " + input + " คือ: " + nextBig +
-      "\nBig Eye Road: " + stored.bigEye.join("") +
-      "\nตาถัดไปคือ: " + nextBigEye +
-      "\nSmall Road: " + stored.small.join("") +
-      "\nตาถัดไปคือ: " + nextSmall +
-      "\nCockroach Road: " + stored.cockroach.join("") +
-      "\nตาถัดไปคือ: " + nextCockroach);
-  } else {
-    alert("ยังไม่เคยบันทึกสถิติที่มี Big Road แบบนี้ในห้อง " + currentRoom);
+  Object.keys(rooms).forEach(room => {
+    let stored = rooms[room];
+    let bigArr = stored.big;
+    let bigStr = bigArr.join("");
+
+    let idx = bigStr.indexOf(input);
+    if (idx !== -1 && idx + input.length < bigArr.length) {
+      found = true;
+      let nextBig = bigArr[idx + input.length] || "-";
+      let nextBigEye = stored.bigEye[idx + input.length] || "-";
+      let nextSmall = stored.small[idx + input.length] || "-";
+      let nextCockroach = stored.cockroach[idx + input.length] || "-";
+
+      // แสดงผลแยกห้อง
+      let block = document.createElement("div");
+      block.className = "search-block";
+      block.innerHTML = `
+        <h4>ผลลัพธ์จากห้อง: ${room}</h4>
+        <p><b>Big Road:</b> ${bigArr.join("")}</p>
+        <p>ตาถัดไปหลัง <b>${input}</b> คือ: <b>${nextBig}</b></p>
+        <p><b>Big Eye Road:</b> ${stored.bigEye.join("")} → ถัดไป: ${nextBigEye}</p>
+        <p><b>Small Road:</b> ${stored.small.join("")} → ถัดไป: ${nextSmall}</p>
+        <p><b>Cockroach Road:</b> ${stored.cockroach.join("")} → ถัดไป: ${nextCockroach}</p>
+      `;
+      resultDiv.appendChild(block);
+    }
+  });
+
+  if (!found) {
+    resultDiv.innerHTML = `<p style="color:red">ไม่พบสถิติที่ตรงกับ "${input}" ในทุกห้อง</p>`;
   }
 }
 
